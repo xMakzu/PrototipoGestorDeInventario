@@ -128,12 +128,26 @@ class FormularioArticulos:
     def listado_completo(self):
         self.pagina3 = ttk.Frame(self.cuaderno1)
         self.cuaderno1.add(self.pagina3, text="Listado completo")
-        self.labelframe3=ttk.LabelFrame(self.pagina3, text="Artículo")
-        self.labelframe3.grid(column=0, row=0, padx=5, pady=10)
-        self.boton1=ttk.Button(self.labelframe3, text="Listado completo", command=self.listar)
-        self.boton1.grid(column=0, row=0, padx=4, pady=4)
-        self.scrolledtext1=st.ScrolledText(self.labelframe3, width=30, height=10)
-        self.scrolledtext1.grid(column=0,row=1, padx=10, pady=10)
+
+        self.tabla = ttk.Treeview(self.pagina3, columns=("Codigo", "Nombre", "Cantidad", "Precio", "Precio de venta"), show="headings")
+        self.tabla.column("Codigo", width=100, anchor="center")
+        self.tabla.column("Nombre", width=200, anchor="center")
+        self.tabla.column("Cantidad", width=100, anchor="center")
+        self.tabla.column("Precio", width=100, anchor="center")
+        self.tabla.column("Precio de venta", width=120, anchor="center")
+
+        self.tabla.heading("Codigo", text="Codigo de barras")
+        self.tabla.heading("Nombre", text="Nombre del producto")
+        self.tabla.heading("Cantidad", text="Cantidad")
+        self.tabla.heading("Precio", text="Precio de compra")
+        self.tabla.heading("Precio de venta", text="Precio de venta")
+
+        articulos = self.articulo1.recuperar_todos()
+        
+        for articulo in articulos:
+            self.tabla.insert("", tk.END, values=articulo)
+
+        self.tabla.pack(padx=5, pady=5)
 
     def listar(self):
         respuesta=self.articulo1.recuperar_todos()
