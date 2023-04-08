@@ -20,6 +20,7 @@ class FormularioArticulos:
         self.cuaderno1.grid(column=0, row=0, padx=10, pady=10)
         self.ventana1.mainloop()
 
+    # Codigo grafico para penstaña agregar articulos
     def carga_articulos(self):
         self.pagina1 = ttk.Frame(self.cuaderno1)
         self.cuaderno1.add(self.pagina1, text="Carga de artículos")
@@ -62,6 +63,7 @@ class FormularioArticulos:
             self.labelframe1.columnconfigure(i, weight=1, minsize=100)
             self.labelframe1.rowconfigure(i, weight=1, minsize=50)
 
+    # Crear función agregar
     def agregar(self):
         datos=(self.Codigocarga.get(), self.Nombrecarga.get(), self.Cantidadcarga.get(), self.Preciocarga.get(), self.PrecioVcarga.get())
         self.articulo1.alta(datos)
@@ -72,7 +74,7 @@ class FormularioArticulos:
         self.Preciocarga.set("")
         self.PrecioVcarga.set("")
         
-
+    # Codigo grafico para pestaña consultar
     def consulta_por_codigo(self):
         self.pagina2 = ttk.Frame(self.cuaderno1)
         self.cuaderno1.add(self.pagina2, text="Consulta por código")
@@ -113,6 +115,7 @@ class FormularioArticulos:
         self.boton1=ttk.Button(self.labelframe2, text="Consultar", command=self.consultar)
         self.boton1.grid(column=1, row=6, padx=4, pady=4)
 
+    # Crear función Consultar
     def consultar(self):
         datos=(self.codigo.get(), )
         respuesta=self.articulo1.consulta(datos)
@@ -126,7 +129,8 @@ class FormularioArticulos:
             self.descripcion.set('')
             self.precio.set('')
             mb.showinfo("Información", "No existe un artículo con dicho código")
-            
+
+    # Codigo de tabla para ver la lista completa
     def listado_completo(self):
         self.pagina3 = ttk.Frame(self.cuaderno1)
         self.cuaderno1.add(self.pagina3, text="Listado completo")
@@ -156,7 +160,6 @@ class FormularioArticulos:
         btn_actualizar = ttk.Button(self.pagina3, text="Actualizar", style="TButton", command=self.actualizar_listado)
         btn_actualizar.pack(pady=10)
 
-
     def actualizar_listado(self):
         # Borra todos los elementos de la tabla
         self.tabla.delete(*self.tabla.get_children())
@@ -173,8 +176,8 @@ class FormularioArticulos:
         self.scrolledtext1.delete("1.0", tk.END)        
         for fila in respuesta:
             self.scrolledtext1.insert(tk.END, "código de barras:"+str(fila[0])+"\nNombre del Producto:"+fila[1]+"\nCantidad:"+str(fila[2])+"\nPrecio de compra: "+str(fila[3])+"\nPrecio de venta: "+str(fila[4])+"\n\n")
-           # self.scrolledtext1.insert(tk.END, "código de barras:"+str(fila[0])+"\nNombre del Producto:"+fila[1]+"\nCantidad:"+fila[2]+"\nPrecio de compra: "+fila[3]+"\nPrecio de venta: "+fila[4]+"\n\n")
 
+    # Codigo grafico para pestaña de borrar articulo
     def borrado(self):
         self.pagina4 = ttk.Frame(self.cuaderno1)
         self.cuaderno1.add(self.pagina4, text="Borrado de artículos")
@@ -188,6 +191,7 @@ class FormularioArticulos:
         self.boton1=ttk.Button(self.labelframe4, text="Borrar", command=self.borrar)
         self.boton1.grid(column=1, row=1, padx=4, pady=4)
 
+    # Función borrar articulo
     def borrar(self):
         confirmar = mb.askyesno("Confirmar", "¿Desea borrar el artículo?")
         if not confirmar:
@@ -201,7 +205,7 @@ class FormularioArticulos:
         else:
             mb.showinfo("Información", "No existe un artículo con dicho código")
 
-
+    # Codigo grafico para pestaña de modificar articulo
     def modificar(self):
         self.pagina5 = ttk.Frame(self.cuaderno1)
         self.cuaderno1.add(self.pagina5, text="Modificar artículo")
@@ -243,6 +247,7 @@ class FormularioArticulos:
         self.boton1=ttk.Button(self.labelframe5, text="Modificar", command=self.modifica)
         self.boton1.grid(column=3, row=6, padx=5, pady=4)
 
+    # Función de modificar articulo
     def modifica(self):
         # Obtener los datos de los campos de entrada
         codigo = self.codigomod.get()
@@ -271,7 +276,7 @@ class FormularioArticulos:
         else:
             mb.showerror("Error", "No se pudo modificar el artículo.")
 
-
+    #Función de consultar articulo en la pestaña de modificar
     def consultar_mod(self):
         datos=(self.codigomod.get(), )
         respuesta=self.articulo1.consulta(datos)
