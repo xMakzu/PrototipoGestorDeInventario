@@ -17,6 +17,7 @@ class FormularioArticulos:
         self.consulta_por_codigo()
         self.borrado()
         self.modificar()
+        self.RecomendacionIA()
         self.cuaderno1.grid(column=0, row=0, padx=10, pady=10)
         self.ventana1.mainloop()
 
@@ -299,7 +300,7 @@ class FormularioArticulos:
         self.labelframe4=ttk.LabelFrame(self.pagina9, text="Artículo")        
         self.labelframe4.grid(column=0, row=0, padx=5, pady=10)
         self.entryborra.grid(column=1, row=0, padx=4, pady=4)
-        self.boton1=ttk.Button(self.labelframe4, text="Recomendaciones", command=self.Prediccion)
+        self.boton1=ttk.Button(self.labelframe4, text="Recomendaciones", command=self.borrar)
         self.boton1.grid(column=1, row=1, padx=4, pady=4)
 
     #def Prediccion(self):
