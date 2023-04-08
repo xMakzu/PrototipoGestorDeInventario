@@ -27,13 +27,13 @@ class FormularioArticulos:
         self.labelframe1.grid(column=0, row=0, padx=5, pady=10)
 
 
-        self.label1=ttk.Label(self.labelframe1, text="Codigo de Barras:")
+        self.label1=ttk.Label(self.labelframe1, text="Código de Barras:")
         self.label1.grid(column=0, row=0, padx=4, pady=4)
         self.Codigocarga=tk.StringVar()
         self.entryCodigo=ttk.Entry(self.labelframe1, textvariable=self.Codigocarga)
         self.entryCodigo.grid(column=1, row=0, padx=4, pady=4)
 
-        self.label2=ttk.Label(self.labelframe1, text="Nombre del producto:")        
+        self.label2=ttk.Label(self.labelframe1, text="Nombre del Producto:")        
         self.label2.grid(column=0, row=1, padx=4, pady=4)
         self.Nombrecarga=tk.StringVar()
         self.entryNombre=ttk.Entry(self.labelframe1, textvariable=self.Nombrecarga)
@@ -45,7 +45,7 @@ class FormularioArticulos:
         self.entryCantidad=ttk.Entry(self.labelframe1, textvariable=self.Cantidadcarga)
         self.entryCantidad.grid(column=1, row=2, padx=4, pady=4)
 
-        self.label5 = ttk.Label(self.labelframe1, text="Precio:")
+        self.label5 = ttk.Label(self.labelframe1, text="Precio de compra:")
         self.label5.grid(column=0, row=4, padx=4, pady=4)
         self.Preciocarga=tk.StringVar()
         self.entryPrecio=ttk.Entry(self.labelframe1, textvariable=self.Preciocarga)
@@ -77,7 +77,7 @@ class FormularioArticulos:
         self.labelframe2=ttk.LabelFrame(self.pagina2, text="Artículo")
         self.labelframe2.grid(column=0, row=0, padx=5, pady=10)
 
-        self.label1=ttk.Label(self.labelframe2, text="Código de barra:")
+        self.label1=ttk.Label(self.labelframe2, text="Código de Barras:")
         self.label1.grid(column=0, row=0, padx=4, pady=4)
         self.codigo=tk.StringVar()
         self.entrycodigo=ttk.Entry(self.labelframe2, textvariable=self.codigo)
@@ -143,11 +143,28 @@ class FormularioArticulos:
         self.tabla.heading("Precio de venta", text="Precio de venta")
 
         articulos = self.articulo1.recuperar_todos()
-        
+
         for articulo in articulos:
             self.tabla.insert("", tk.END, values=articulo)
 
         self.tabla.pack(padx=5, pady=5)
+    # Agregar botón para actualizar el listado
+        estilo = ttk.Style()
+        estilo.configure("TButton", padding=6, relief="flat", background="#ccc")
+        btn_actualizar = ttk.Button(self.pagina3, text="Actualizar", style="TButton", command=self.actualizar_listado)
+        btn_actualizar.pack(pady=10)
+
+
+    def actualizar_listado(self):
+        # Borra todos los elementos de la tabla
+        self.tabla.delete(*self.tabla.get_children())
+
+        # Recupera los nuevos datos y los inserta en la tabla
+        articulos = self.articulo1.recuperar_todos()
+
+        for articulo in articulos:
+            self.tabla.insert("", tk.END, values=articulo)
+
 
     def listar(self):
         respuesta=self.articulo1.recuperar_todos()
@@ -161,7 +178,7 @@ class FormularioArticulos:
         self.cuaderno1.add(self.pagina4, text="Borrado de artículos")
         self.labelframe4=ttk.LabelFrame(self.pagina4, text="Artículo")        
         self.labelframe4.grid(column=0, row=0, padx=5, pady=10)
-        self.label1=ttk.Label(self.labelframe4, text="Código:")
+        self.label1=ttk.Label(self.labelframe4, text="Código del artículo:")
         self.label1.grid(column=0, row=0, padx=4, pady=4)
         self.codigoborra=tk.StringVar()
         self.entryborra=ttk.Entry(self.labelframe4, textvariable=self.codigoborra)
