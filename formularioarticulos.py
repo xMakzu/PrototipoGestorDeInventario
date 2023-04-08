@@ -188,12 +188,18 @@ class FormularioArticulos:
         self.boton1.grid(column=1, row=1, padx=4, pady=4)
 
     def borrar(self):
+        confirmar = mb.askyesno("Confirmar", "¿Desea borrar el artículo?")
+        if not confirmar:
+            return
+        
         datos=(self.codigoborra.get(), )
         cantidad=self.articulo1.baja(datos)
+        
         if cantidad==1:
             mb.showinfo("Información", "Se borró el artículo con dicho código")
         else:
             mb.showinfo("Información", "No existe un artículo con dicho código")
+
 
     def modificar(self):
         self.pagina5 = ttk.Frame(self.cuaderno1)
@@ -237,12 +243,33 @@ class FormularioArticulos:
         self.boton1.grid(column=3, row=6, padx=5, pady=4)
 
     def modifica(self):
-        datos=(self.codigomod.get(), self.Nombremod.get(), self.Cantidadmod.get(), self.preciomod.get(), self.preciovmod.get())
-        cantidad=self.articulo1.modificacion(datos)
-        if cantidad==1:
-            mb.showinfo("Información", "Se modificó el artículo")
+        # Obtener los datos de los campos de entrada
+        codigo = self.codigomod.get()
+        nombre = self.Nombremod.get()
+        cantidad = self.Cantidadmod.get()
+        precio = self.preciomod.get()
+        precio_venta = self.preciovmod.get()
+
+        # Verificar que el código de barras ingresado existe en la base de datos
+        datos = (codigo,)
+        articulo_existente = self.articulo1.consulta(datos)
+        if not articulo_existente:
+            mb.showerror("Error", "El artículo con ese código de barras no existe.")
+            return
+
+        # Preguntar al usuario si desea modificar el artículo
+        confirmar = mb.askyesno("Confirmar", "¿Desea modificar el artículo?")
+        if not confirmar:
+            return
+
+        # Modificar el artículo en la base de datos
+        datos = (nombre, cantidad, precio, precio_venta, codigo)
+        filas_modificadas = self.articulo1.modificacion(datos)
+        if filas_modificadas == 1:
+            mb.showinfo("Información", "El artículo ha sido modificado exitosamente.")
         else:
-            mb.showinfo("Información", "No existe el artículo con ese código")
+            mb.showerror("Error", "No se pudo modificar el artículo.")
+
 
     def consultar_mod(self):
         datos=(self.codigomod.get(), )
