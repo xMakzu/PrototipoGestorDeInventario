@@ -286,5 +286,3 @@ class FormularioArticulos:
             self.preciomod.set('')
             self.preciovmod.set('')
             mb.showinfo("Información", "No existe un artículo con dicho código")
-
-# aplicacion1=FormularioArticulos()
