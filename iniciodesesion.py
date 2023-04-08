@@ -20,7 +20,7 @@ class Login:
         ent_usuario.place(x=150, y=100)
 
         lbl_contraseña = Label(self.root, text="Contraseña:", font=("Arial", 14))
-        lbl_contraseña.place(x=50, y=150)
+        lbl_contraseña.place(x=45, y=150)
         ent_contraseña = Entry(self.root, textvariable=self.contraseña, show="*", font=("Arial", 14))
         ent_contraseña.place(x=150, y=150)
 
