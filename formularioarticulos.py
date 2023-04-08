@@ -2,8 +2,10 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox as mb
 from tkinter import scrolledtext as st
-
 import articulos
+import folium
+import webview
+import webbrowser
 
 class FormularioArticulos:
     def __init__(self):
@@ -17,6 +19,7 @@ class FormularioArticulos:
         self.consulta_por_codigo()
         self.borrado()
         self.modificar()
+        self.mapa()
         self.cuaderno1.grid(column=0, row=0, padx=10, pady=10)
         self.ventana1.mainloop()
 
@@ -304,3 +307,14 @@ class FormularioArticulos:
 
     #def Prediccion(self):
     ####
+
+
+     # Creación de la pestaña del mapa
+    def mapa(self):
+       # Creación de pestaña y función del mapa
+        self.pagina6 = ttk.Frame(self.cuaderno1)
+        self.cuaderno1.add(self.pagina6, text="Mapa")
+        # Crear el frame principal
+        self.labelframe2 = ttk.LabelFrame(self.pagina6, text="Mapa de entrega", padding=20)
+        self.labelframe2.pack(fill='both', expand=True, padx=20, pady=20)
+
