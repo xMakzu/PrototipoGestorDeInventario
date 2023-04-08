@@ -15,7 +15,6 @@ class FormularioArticulos:
         self.listado_completo()
         self.carga_articulos()
         self.consulta_por_codigo()
-        #self.listado_completo()
         self.borrado()
         self.modificar()
         self.cuaderno1.grid(column=0, row=0, padx=10, pady=10)
@@ -26,7 +25,6 @@ class FormularioArticulos:
         self.cuaderno1.add(self.pagina1, text="Carga de artículos")
         self.labelframe1=ttk.LabelFrame(self.pagina1, text="Artículo")        
         self.labelframe1.grid(column=0, row=0, padx=5, pady=10)
-
 
         self.label1=ttk.Label(self.labelframe1, text="Código de Barras:")
         self.label1.grid(column=0, row=0, padx=4, pady=4)
