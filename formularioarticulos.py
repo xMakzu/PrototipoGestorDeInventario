@@ -3,9 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox as mb
 from tkinter import scrolledtext as st
 import articulos
-import folium
-import webview
-import webbrowser
+
 
 class FormularioArticulos:
     def __init__(self):
@@ -19,6 +17,8 @@ class FormularioArticulos:
         self.consulta_por_codigo()
         self.borrado()
         self.modificar()
+        self.mapa()
+        self.RecomendacionIA()
         self.cuaderno1.grid(column=0, row=0, padx=10, pady=10)
         self.ventana1.mainloop()
 
@@ -295,18 +295,6 @@ class FormularioArticulos:
             self.preciovmod.set('')
             mb.showinfo("Información", "No existe un artículo con dicho código")
     
-    def RecomendacionIA(self):
-        self.pagina9 = ttk.Frame(self.cuaderno1)
-        self.cuaderno1.add(self.pagina9, text="recomendaciones de la IA")
-        self.labelframe4=ttk.LabelFrame(self.pagina9, text="Artículo")        
-        self.labelframe4.grid(column=0, row=0, padx=5, pady=10)
-        self.entryborra.grid(column=1, row=0, padx=4, pady=4)
-        self.boton1=ttk.Button(self.labelframe4, text="Recomendaciones", command=self.borrar)
-        self.boton1.grid(column=1, row=1, padx=4, pady=4)
-
-    #def Prediccion(self):
-    ####
-
 
      # Creación de la pestaña del mapa
     def mapa(self):
@@ -316,5 +304,20 @@ class FormularioArticulos:
         # Crear el frame principal
         self.labelframe2 = ttk.LabelFrame(self.pagina6, text="Mapa de entrega", padding=20)
         self.labelframe2.pack(fill='both', expand=True, padx=20, pady=20)
+
+
+    def RecomendacionIA(self):
+        self.pagina7 = ttk.Frame(self.cuaderno1)
+        self.cuaderno1.add(self.pagina7, text="recomendaciones de la IA")
+        self.labelframe4=ttk.LabelFrame(self.pagina7, text="Artículo")        
+        self.labelframe4.grid(column=0, row=0, padx=5, pady=10)
+        self.entryborra.grid(column=1, row=0, padx=4, pady=4)
+        self.boton1=ttk.Button(self.labelframe4, text="Recomendaciones", command=self.borrar)
+        self.boton1.grid(column=1, row=1, padx=4, pady=4)
+
+    #def Prediccion(self):
+    ####
+
+
 
 ##cambios
