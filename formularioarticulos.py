@@ -23,41 +23,44 @@ class FormularioArticulos:
     def carga_articulos(self):
         self.pagina1 = ttk.Frame(self.cuaderno1)
         self.cuaderno1.add(self.pagina1, text="Carga de artículos")
-        self.labelframe1=ttk.LabelFrame(self.pagina1, text="Artículo")        
-        self.labelframe1.grid(column=0, row=0, padx=5, pady=10)
-
-        self.label1=ttk.Label(self.labelframe1, text="Código de Barras:")
-        self.label1.grid(column=0, row=0, padx=4, pady=4)
-        self.Codigocarga=tk.StringVar()
-        self.entryCodigo=ttk.Entry(self.labelframe1, textvariable=self.Codigocarga)
-        self.entryCodigo.grid(column=1, row=0, padx=4, pady=4)
-
-        self.label2=ttk.Label(self.labelframe1, text="Nombre del Producto:")        
-        self.label2.grid(column=0, row=1, padx=4, pady=4)
-        self.Nombrecarga=tk.StringVar()
-        self.entryNombre=ttk.Entry(self.labelframe1, textvariable=self.Nombrecarga)
-        self.entryNombre.grid(column=1, row=1, padx=4, pady=4)
-
-        self.label3 = ttk.Label(self.labelframe1, text="Cantidad:")
-        self.label3.grid(column=0, row=2, padx=4, pady=4)
-        self.Cantidadcarga=tk.StringVar()
-        self.entryCantidad=ttk.Entry(self.labelframe1, textvariable=self.Cantidadcarga)
-        self.entryCantidad.grid(column=1, row=2, padx=4, pady=4)
-
-        self.label5 = ttk.Label(self.labelframe1, text="Precio de compra:")
-        self.label5.grid(column=0, row=4, padx=4, pady=4)
-        self.Preciocarga=tk.StringVar()
-        self.entryPrecio=ttk.Entry(self.labelframe1, textvariable=self.Preciocarga)
-        self.entryPrecio.grid(column=1, row=4, padx=4, pady=4)
-
-        self.label6 = ttk.Label(self.labelframe1, text="Precio de venta:")
-        self.label6.grid(column=0, row=5, padx=4, pady=4)
-        self.PrecioVcarga=tk.StringVar()
-        self.entryPrecioV=ttk.Entry(self.labelframe1, textvariable=self.PrecioVcarga)
-        self.entryPrecioV.grid(column=1, row=5, padx=4, pady=4)
-
-        self.boton1=ttk.Button(self.labelframe1, text="Confirmar", command=self.agregar)
-        self.boton1.grid(column=1, row=7, padx=4, pady=4)
+        
+        # Crear un estilo personalizado para los widgets
+        style = ttk.Style()
+        style.configure('TLabel', font=('Arial', 12))
+        style.configure('TEntry', font=('Arial', 12))
+        style.configure('TButton', font=('Arial', 12))
+        
+        # Crear el frame principal
+        self.labelframe1 = ttk.LabelFrame(self.pagina1, text="Artículo", padding=20)
+        self.labelframe1.grid(column=0, row=0, padx=20, pady=20, sticky='nsew')
+        
+        # Crear los widgets del formulario
+        ttk.Label(self.labelframe1, text="Código de barras:").grid(column=0, row=0, padx=10, pady=10)
+        self.Codigocarga = tk.StringVar()
+        ttk.Entry(self.labelframe1, textvariable=self.Codigocarga, width=30).grid(column=1, row=0, padx=10, pady=10)
+        
+        ttk.Label(self.labelframe1, text="Nombre del producto:").grid(column=0, row=1, padx=10, pady=10)
+        self.Nombrecarga = tk.StringVar()
+        ttk.Entry(self.labelframe1, textvariable=self.Nombrecarga, width=30).grid(column=1, row=1, padx=10, pady=10)
+        
+        ttk.Label(self.labelframe1, text="Cantidad:").grid(column=0, row=2, padx=10, pady=10)
+        self.Cantidadcarga = tk.StringVar()
+        ttk.Entry(self.labelframe1, textvariable=self.Cantidadcarga, width=30).grid(column=1, row=2, padx=10, pady=10)
+        
+        ttk.Label(self.labelframe1, text="Precio de compra:").grid(column=0, row=3, padx=10, pady=10)
+        self.Preciocarga = tk.StringVar()
+        ttk.Entry(self.labelframe1, textvariable=self.Preciocarga, width=30).grid(column=1, row=3, padx=10, pady=10)
+        
+        ttk.Label(self.labelframe1, text="Precio de venta:").grid(column=0, row=4, padx=10, pady=10)
+        self.PrecioVcarga = tk.StringVar()
+        ttk.Entry(self.labelframe1, textvariable=self.PrecioVcarga, width=30).grid(column=1, row=4, padx=10, pady=10)
+        
+        ttk.Button(self.labelframe1, text="Confirmar", command=self.agregar).grid(column=1, row=5, padx=10, pady=20, sticky='e')
+        
+        # Agregar padding a las filas y columnas del frame
+        for i in range(5):
+            self.labelframe1.columnconfigure(i, weight=1, minsize=100)
+            self.labelframe1.rowconfigure(i, weight=1, minsize=50)
 
     def agregar(self):
         datos=(self.Codigocarga.get(), self.Nombrecarga.get(), self.Cantidadcarga.get(), self.Preciocarga.get(), self.PrecioVcarga.get())
