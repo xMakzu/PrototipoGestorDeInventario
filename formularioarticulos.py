@@ -124,7 +124,7 @@ class FormularioArticulos:
             self.descripcion.set('')
             self.precio.set('')
             mb.showinfo("Información", "No existe un artículo con dicho código")
-
+   # ola
     def listado_completo(self):
         self.pagina3 = ttk.Frame(self.cuaderno1)
         self.cuaderno1.add(self.pagina3, text="Listado completo")
