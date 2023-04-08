@@ -318,3 +318,4 @@ class FormularioArticulos:
         self.labelframe2 = ttk.LabelFrame(self.pagina6, text="Mapa de entrega", padding=20)
         self.labelframe2.pack(fill='both', expand=True, padx=20, pady=20)
 
+##cambios
