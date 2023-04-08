@@ -292,3 +292,14 @@ class FormularioArticulos:
             self.preciomod.set('')
             self.preciovmod.set('')
             mb.showinfo("Información", "No existe un artículo con dicho código")
+    
+    def RecomendacionIA(self):
+        self.pagina9 = ttk.Frame(self.cuaderno1)
+        self.cuaderno1.add(self.pagina9, text="recomendaciones de la IA")
+        self.labelframe4=ttk.LabelFrame(self.pagina9, text="Artículo")        
+        self.labelframe4.grid(column=0, row=0, padx=5, pady=10)
+        self.entryborra.grid(column=1, row=0, padx=4, pady=4)
+        self.boton1=ttk.Button(self.labelframe4, text="Recomendaciones", command=self.Prediccion)
+        self.boton1.grid(column=1, row=1, padx=4, pady=4)
+
+    #def Prediccion(self):
