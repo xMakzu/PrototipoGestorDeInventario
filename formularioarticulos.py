@@ -143,6 +143,7 @@ class FormularioArticulos:
         self.tabla.heading("Precio", text="Precio de compra")
         self.tabla.heading("Precio de venta", text="Precio de venta")
 
+
         # Crear la entrada para ingresar el código del artículo
         frame_busqueda = ttk.Frame(self.pagina3)
         frame_busqueda.pack(side="top", fill="x", padx=5, pady=5)
@@ -171,7 +172,8 @@ class FormularioArticulos:
             self.tabla.delete(*self.tabla.get_children())
             self.tabla.insert("", tk.END, values=articulo)
         else:
-            mb.showerror("Error", f"No se encontró el artículo con el código {codigo}")     
+            mb.showerror("Error", f"No se encontró el artículo con el código {codigo}")
+
 
     # Codigo grafico para pestaña de borrar articulo
     def borrado(self):
