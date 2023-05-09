@@ -14,7 +14,6 @@ class FormularioArticulos:
         self.cuaderno1 = ttk.Notebook(self.ventana1)        
         self.listado_completo()
         self.carga_articulos()
-        self.borrado()
         self.cuaderno1.grid(column=0, row=0, padx=10, pady=10)
         self.ventana1.mainloop()
 
@@ -158,6 +157,9 @@ class FormularioArticulos:
         btn_buscar = ttk.Button(frame_busqueda, text="Buscar", command=self.buscar_articulo)
         btn_buscar.pack(side="left", padx=5)
 
+        btn_buscar = ttk.Button(frame_busqueda, text="Borrar Articulo", command=self.borrar)
+        btn_buscar.pack(side="left", padx=10)
+
         articulos = self.articulo1.recuperar_todos()
 
         for articulo in articulos:
@@ -171,31 +173,49 @@ class FormularioArticulos:
         if articulo:
             self.tabla.delete(*self.tabla.get_children())
             self.tabla.insert("", tk.END, values=articulo)
+            
+            # Actualizar la tabla de búsqueda de nuevo en 1 segundo
+            self.tabla.after(1000, self.actualizar_tabla)  # llamar a actualizar_tabla_busqueda() de nuevo en 1 segundo
+            
         else:
             mb.showerror("Error", f"No se encontró el artículo con el código {codigo}")
 
+    def actualizar_tabla(self):
+        # Borra todos los elementos de la tabla
+        self.tabla.delete(*self.tabla.get_children())
 
-    # Codigo grafico para pestaña de borrar articulo
-    def borrado(self):
-        self.pagina4 = ttk.Frame(self.cuaderno1)
-        self.cuaderno1.add(self.pagina4, text="Borrado de artículos")
-        self.labelframe4=ttk.LabelFrame(self.pagina4, text="Artículo")        
-        self.labelframe4.grid(column=0, row=0, padx=5, pady=10)
-        self.label1=ttk.Label(self.labelframe4, text="Código del artículo:")
-        self.label1.grid(column=0, row=0, padx=4, pady=4)
-        self.codigoborra=tk.StringVar()
-        self.entryborra=ttk.Entry(self.labelframe4, textvariable=self.codigoborra)
-        self.entryborra.grid(column=1, row=0, padx=4, pady=4)
-        self.boton1=ttk.Button(self.labelframe4, text="Borrar", command=self.borrar)
-        self.boton1.grid(column=1, row=1, padx=4, pady=4)
+        # Recupera el código de búsqueda
+        codigo = self.entry_busqueda.get()
 
-    # Función borrar articulo
+        # Si el campo de búsqueda está vacío, mostrar todos los artículos
+        if not codigo:
+            for articulo in self.articulo1.recuperar_todos():
+                self.tabla.insert("", tk.END, values=articulo)
+
+        # Si hay un código de búsqueda, buscar y mostrar el artículo correspondiente
+        else:
+            articulo = self.articulo1.recuperar(codigo)
+            if articulo:
+                self.tabla.insert("", tk.END, values=articulo)
+
+        # Actualizar la tabla de búsqueda de nuevo en 1 segundo
+        self.tabla.after(1000, self.actualizar_tabla)  # llamar a actualizar_tabla() de nuevo en 1 segundo
+
+    #Eliminar articulo
+    def eliminar_articulo(self):
+        codigo = self.entry_busqueda.get()
+        if self.articulo1.baja(codigo):
+            self.tabla.delete(*self.tabla.get_children())
+            self.actualizar_tabla()
+            mb.showinfo("Información", f"El artículo con código {codigo} ha sido eliminado exitosamente.")
+        else:
+            mb.showerror("Error", f"No se encontró el artículo con el código {codigo}.")
+
     def borrar(self):
         confirmar = mb.askyesno("Confirmar", "¿Desea borrar el artículo?")
         if not confirmar:
             return
-        
-        datos=(self.codigoborra.get(), )
+        datos=(self.entry_busqueda.get(), )
         cantidad=self.articulo1.baja(datos)
         
         if cantidad==1:
