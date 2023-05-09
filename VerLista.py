@@ -6,6 +6,7 @@ class VerLista:
     def __init__(self, master):
         self.master = master
         master.title("Ver Lista")
+        self.articulo1=articulos.Articulos()
 
         # Crear la página principal
         self.pagina1 = ttk.Frame(self.master)
@@ -32,7 +33,7 @@ class VerLista:
 # Agregar botón para actualizar el listado
         estilo = ttk.Style()
         estilo.configure("TButton", padding=6, relief="flat", background="#ccc")
-        btn_actualizar = ttk.Button(self.pagina3, text="Actualizar", style="TButton", command=self.actualizar_listado)
+        btn_actualizar = ttk.Button(self.pagina1, text="Actualizar", style="TButton", command=self.actualizar_listado)
         btn_actualizar.pack(pady=10)
 
     def actualizar_listado(self):

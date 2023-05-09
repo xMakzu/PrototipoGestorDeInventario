@@ -2,15 +2,11 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox as mb
 import articulos
-from articulos import consulta
-
-
 class ConsultarArticulo:
     def __init__(self, ventana):
         self.ventana=ventana
         self.ventana.title("Consultar Artículo")
-
-        self.articulo1=Articulo()
+        self.articulo1=articulos.Articulos()
 
          # Crear un estilo personalizado para los widgets
         style = ttk.Style()

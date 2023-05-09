@@ -4,7 +4,8 @@ from tkinter import messagebox as mb
 class ModificarArticulo:
     def __init__(self, master):
         self.master = master
-        master.title("Mi Aplicación")
+        master.title("Modificar Articulo")
+        
 
         # Crear un labelframe para contener todos los elementos
         self.labelframe = ttk.LabelFrame(self.master, text="Modificar Producto")

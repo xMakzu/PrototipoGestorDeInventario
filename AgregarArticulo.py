@@ -1,11 +1,12 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox as mb
-
+import articulos
 class AgregarArticulo:
     def __init__(self, master):
         self.master = master
         self.master.title("Agregar Artículo")
+        self.articulo1=articulos.Articulos()
 
         # Crear un estilo personalizado para los widgets
         style = ttk.Style()
@@ -51,12 +52,13 @@ class AgregarArticulo:
 
     # Crear función agregar
     def agregar(self):
-        datos=(self.Codigocarga.get(), self.Nombrecarga.get(), self.Cantidadcarga.get(), self.Preciocarga.get(), self.PrecioVcarga.get())
+        datos=(self.Codigocarga.get(), self.Nombrecarga.get(), self.Cantidadcarga.get(),self.FechaCarga.get(), self.Preciocarga.get(), self.PrecioVcarga.get())
         self.articulo1.alta(datos)
         mb.showinfo("Información", "Los datos fueron cargados")
         self.Codigocarga.set("")
         self.Nombrecarga.set("")
         self.Cantidadcarga.set("")
+        self.FechaCarga.set("")
         self.Preciocarga.set("")
         self.PrecioVcarga.set("")    
 
