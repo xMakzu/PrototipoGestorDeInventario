@@ -122,7 +122,7 @@ class FormularioArticulos:
         else:
             mb.showinfo("Información", "No existe un artículo con dicho código")
 
-    # Codigo de tabla para ver la lista completa
+    # Codigo de tabla
     def listado_completo(self):
         self.pagina3 = ttk.Frame(self.cuaderno1)
         self.cuaderno1.add(self.pagina3, text="Listado completo")
