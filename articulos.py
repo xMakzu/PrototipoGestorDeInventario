@@ -35,6 +35,16 @@ class Articulos:
         finally:
             cone.close()
 
+    def recuperar(self, codigo):
+        try:
+            cone=self.abrir()
+            cursor=cone.cursor()
+            sql="select codigo_barras, nombre_producto, cantidad, fechaexp, precio, precio_venta from articulos where codigo_barras=?"
+            cursor.execute(sql, (codigo,))
+            return cursor.fetchone()
+        finally:
+            cone.close()
+
     def baja(self, datos):
         try:
             cone=self.abrir()

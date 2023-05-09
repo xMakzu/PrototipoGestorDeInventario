@@ -3,7 +3,7 @@ from tkinter import ttk
 from tkinter import messagebox as mb
 from tkinter import scrolledtext as st
 import articulos
-
+from articulos import Articulos
 
 class FormularioArticulos:
     def __init__(self):
@@ -143,27 +143,35 @@ class FormularioArticulos:
         self.tabla.heading("Precio", text="Precio de compra")
         self.tabla.heading("Precio de venta", text="Precio de venta")
 
+        # Crear la entrada para ingresar el código del artículo
+        frame_busqueda = ttk.Frame(self.pagina3)
+        frame_busqueda.pack(side="top", fill="x", padx=5, pady=5)
+
+        lbl_busqueda = ttk.Label(frame_busqueda, text="Buscar por código:")
+        lbl_busqueda.pack(side="left", padx=5)
+
+        self.entry_busqueda = ttk.Entry(frame_busqueda)
+        self.entry_busqueda.pack(side="left", fill="x", expand=True, padx=5)
+
+        # Agregar botón de búsqueda
+        btn_buscar = ttk.Button(frame_busqueda, text="Buscar", command=self.buscar_articulo)
+        btn_buscar.pack(side="left", padx=5)
+
         articulos = self.articulo1.recuperar_todos()
 
         for articulo in articulos:
             self.tabla.insert("", tk.END, values=articulo)
 
         self.tabla.pack(padx=5, pady=5)
-    # Agregar botón para actualizar el listado
-        estilo = ttk.Style()
-        estilo.configure("TButton", padding=6, relief="flat", background="#ccc")
-        btn_actualizar = ttk.Button(self.pagina3, text="Actualizar", style="TButton", command=self.actualizar_listado)
-        btn_actualizar.pack(pady=10)
 
-    def actualizar_listado(self):
-        # Borra todos los elementos de la tabla
-        self.tabla.delete(*self.tabla.get_children())
-
-        # Recupera los nuevos datos y los inserta en la tabla
-        articulos = self.articulo1.recuperar_todos()
-
-        for articulo in articulos:
+    def buscar_articulo(self):
+        codigo = self.entry_busqueda.get()
+        articulo = self.articulo1.recuperar(codigo)
+        if articulo:
+            self.tabla.delete(*self.tabla.get_children())
             self.tabla.insert("", tk.END, values=articulo)
+        else:
+            mb.showerror("Error", f"No se encontró el artículo con el código {codigo}")     
 
     # Codigo grafico para pestaña de borrar articulo
     def borrado(self):
