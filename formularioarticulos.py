@@ -23,7 +23,7 @@ class FormularioArticulos:
     # Codigo grafico para penstaña agregar articulos
     def carga_articulos(self):
         self.pagina1 = ttk.Frame(self.cuaderno1)
-        self.cuaderno1.add(self.pagina1, text="Carga de artículos")
+        self.cuaderno1.add(self.pagina1, text="Crear/Editar")
         
         # Crear un estilo personalizado para los widgets
         style = ttk.Style()
@@ -32,7 +32,7 @@ class FormularioArticulos:
         style.configure('TButton', font=('Arial', 12))
         
         # Crear el frame principal
-        self.labelframe1 = ttk.LabelFrame(self.pagina1, text="Artículo", padding=20)
+        self.labelframe1 = ttk.LabelFrame(self.pagina1, text="Crear/Editar", padding=20)
         self.labelframe1.grid(column=0, row=0, padx=20, pady=20, sticky='nsew')
         
         # Crear los widgets del formulario
@@ -56,7 +56,9 @@ class FormularioArticulos:
         self.PrecioVcarga = tk.StringVar()
         ttk.Entry(self.labelframe1, textvariable=self.PrecioVcarga, width=30).grid(column=1, row=4, padx=10, pady=10)
         
-        ttk.Button(self.labelframe1, text="Confirmar", command=self.agregar).grid(column=1, row=5, padx=10, pady=20, sticky='e')
+        ttk.Button(self.labelframe1, text="Agregar Articulo", command=self.agregar).grid(column=1, row=5, padx=10, pady=20, sticky='e')
+        self.boton1=ttk.Button(self.labelframe1, text="Modificar Articulo", command=self.modifica)
+        self.boton1.grid(column=3, row=6, padx=5, pady=4)
         
         # Agregar padding a las filas y columnas del frame
         for i in range(5):
@@ -244,8 +246,7 @@ class FormularioArticulos:
 
         self.boton1=ttk.Button(self.labelframe5, text="Consultar", command=self.consultar_mod)
         self.boton1.grid(column=1, row=6, padx=5, pady=4)
-        self.boton1=ttk.Button(self.labelframe5, text="Modificar", command=self.modifica)
-        self.boton1.grid(column=3, row=6, padx=5, pady=4)
+        
 
     # Función de modificar articulo
     def modifica(self):
