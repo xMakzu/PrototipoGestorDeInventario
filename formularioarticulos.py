@@ -316,9 +316,4 @@ class FormularioArticulos:
         self.boton1.grid(column=1, row=1, padx=4, pady=4)
 
     #def Prediccion(self):
-    ####
-
-
-
-##cambios
-###cambios 2
+    
