@@ -73,7 +73,7 @@ class Articulos:
             cone=self.abrir()
             cursor=cone.cursor()
             # Consulta de los artículos con 20 o menos unidades
-            sql="SELECT * FROM articulos WHERE cantidad <= 20"
+            sql="SELECT codigo_barras, nombre_producto, cantidad, precio FROM articulos WHERE cantidad <= 20"
             cursor.execute(sql)
             return cursor.fetchall()
         finally:

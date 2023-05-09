@@ -4,8 +4,8 @@ from tkinter import messagebox as mb
 from tkinter import scrolledtext as st
 import articulos
 import sqlite3
-from tabulate import tabulate
 from articulos import Articulos
+
 
 class FormularioArticulos:
     def __init__(self):
@@ -16,7 +16,7 @@ class FormularioArticulos:
         self.cuaderno1 = ttk.Notebook(self.ventana1)        
         self.listado_completo()
         self.carga_articulos()
-        self.Recomendacion()
+        self.AnalisisdeDatos()
         self.cuaderno1.grid(column=0, row=0, padx=10, pady=10)
         self.ventana1.mainloop()
 
@@ -162,7 +162,7 @@ class FormularioArticulos:
 
         btn_buscar = ttk.Button(frame_busqueda, text="Borrar Articulo", command=self.borrar)
         btn_buscar.pack(side="left", padx=10)
-
+        
         articulos = self.articulo1.recuperar_todos()
 
         for articulo in articulos:
@@ -226,7 +226,7 @@ class FormularioArticulos:
         else:
             mb.showinfo("Información", "No existe un artículo con dicho código")
 
-    def Recomendacion(self):
+    def AnalisisdeDatos(self):
         self.pagina4 = ttk.Frame(self.cuaderno1)
         self.cuaderno1.add(self.pagina4, text="Análisis de datos")
 
@@ -237,15 +237,40 @@ class FormularioArticulos:
         lbl_busqueda.pack(side="left", padx=5)
 
         # Creación del Treeview
-        treeview = ttk.Treeview(self.pagina4, columns=("codigo_barras", "nombre_producto", "precio"))
-        treeview.pack(side="top", fill="both", expand=True)
+        self.treeview = ttk.Treeview(self.pagina4, columns=("codigo_barras", "nombre_producto", "cantidad_producto", "precio"))
+        self.treeview.pack(side="top", fill="both", expand=True)
 
         # Configuración de las columnas del Treeview
-        treeview.heading("#0", text="ID")
-        treeview.heading("codigo_barras", text="Código de barras")
-        treeview.heading("nombre_producto", text="Nombre del producto")
-        treeview.heading("precio", text="Precio")
-        treeview.column("#0", width=50)
+        self.treeview.heading("#0", text="ID")
+        self.treeview.heading("codigo_barras", text="Código de barras")
+        self.treeview.heading("nombre_producto", text="Nombre del producto")
+        self.treeview.heading("cantidad_producto", text="Cantidad")
+        self.treeview.heading("precio", text="Precio")
+        self.treeview.column("#0", width=50)
+
+        self.treeview.column("codigo_barras", anchor="center")
+        self.treeview.column("nombre_producto", anchor="center")
+        self.treeview.column("cantidad_producto", anchor="center")
+        self.treeview.column("precio", anchor="center")
+
+
+        # Botón para obtener la lista de artículos recomendados
+        btn_obtener = ttk.Button(frame_busqueda, text="Obtener artículos", command=self.obtener_articulos)
+        btn_obtener.pack(side="right", padx=5, pady=5)
+
+    def obtener_articulos(self):
+        # Llamada al método para obtener las recomendaciones de productos
+        recomendaciones = self.articulo1.obtener_recomendaciones()
+
+        # Borra todos los elementos de la tabla
+        self.treeview.delete(*self.treeview.get_children())
+
+        # Inserta las recomendaciones en la tabla
+        for i, recomendacion in enumerate(recomendaciones):
+            self.treeview.insert("", tk.END, text=i+1, values=recomendacion)
+
+
+
 
 
        
