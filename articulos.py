@@ -67,3 +67,14 @@ class Articulos:
             return cursor.rowcount # retornamos la cantidad de filas modificadas            
         except:
             cone.close()
+
+    def obtener_recomendaciones(self):
+        try:
+            cone=self.abrir()
+            cursor=cone.cursor()
+            # Consulta de los artículos con 20 o menos unidades
+            sql="SELECT * FROM articulos WHERE cantidad <= 20"
+            cursor.execute(sql)
+            return cursor.fetchall()
+        finally:
+            cone.close()

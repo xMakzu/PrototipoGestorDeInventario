@@ -3,6 +3,8 @@ from tkinter import ttk
 from tkinter import messagebox as mb
 from tkinter import scrolledtext as st
 import articulos
+import sqlite3
+from tabulate import tabulate
 from articulos import Articulos
 
 class FormularioArticulos:
@@ -14,6 +16,7 @@ class FormularioArticulos:
         self.cuaderno1 = ttk.Notebook(self.ventana1)        
         self.listado_completo()
         self.carga_articulos()
+        self.Recomendacion()
         self.cuaderno1.grid(column=0, row=0, padx=10, pady=10)
         self.ventana1.mainloop()
 
@@ -222,3 +225,27 @@ class FormularioArticulos:
             mb.showinfo("Información", "Se borró el artículo con dicho código")
         else:
             mb.showinfo("Información", "No existe un artículo con dicho código")
+
+    def Recomendacion(self):
+        self.pagina4 = ttk.Frame(self.cuaderno1)
+        self.cuaderno1.add(self.pagina4, text="Análisis de datos")
+
+        frame_busqueda = ttk.Frame(self.pagina4)
+        frame_busqueda.pack(side="top", fill="x", padx=5, pady=5)
+
+        lbl_busqueda = ttk.Label(frame_busqueda, text="Se recomienda que compres estos articulos:")
+        lbl_busqueda.pack(side="left", padx=5)
+
+        # Creación del Treeview
+        treeview = ttk.Treeview(self.pagina4, columns=("codigo_barras", "nombre_producto", "precio"))
+        treeview.pack(side="top", fill="both", expand=True)
+
+        # Configuración de las columnas del Treeview
+        treeview.heading("#0", text="ID")
+        treeview.heading("codigo_barras", text="Código de barras")
+        treeview.heading("nombre_producto", text="Nombre del producto")
+        treeview.heading("precio", text="Precio")
+        treeview.column("#0", width=50)
+
+
+       
