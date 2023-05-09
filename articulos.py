@@ -10,7 +10,7 @@ class Articulos:
     def alta(self, datos):
         cone=self.abrir()
         cursor=cone.cursor()
-        sql="insert into articulos(codigo_barras, nombre_producto, cantidad, precio, precio_venta) values (?,?,?,?,?)"
+        sql="insert into articulos(codigo_barras, nombre_producto, cantidad, fechaexp, precio, precio_venta) values (?,?,?,?,?,?)"
         cursor.execute(sql, datos)
         cone.commit()
         cone.close()
@@ -19,7 +19,7 @@ class Articulos:
         try:
             cone=self.abrir()
             cursor=cone.cursor()
-            sql="select nombre_producto, cantidad,precio, precio_venta from articulos where codigo_barras=?"
+            sql="select nombre_producto, cantidad, fechaexp, precio, precio_venta from articulos where codigo_barras=?"
             cursor.execute(sql, datos)
             return cursor.fetchall()
         finally:
@@ -29,7 +29,7 @@ class Articulos:
         try:
             cone=self.abrir()
             cursor=cone.cursor()
-            sql="select codigo_barras, nombre_producto, cantidad, precio, precio_venta from articulos"
+            sql="select codigo_barras, nombre_producto, cantidad, fechaexp, precio, precio_venta from articulos"
             cursor.execute(sql)
             return cursor.fetchall()
         finally:
@@ -50,7 +50,7 @@ class Articulos:
         try:
             cone=self.abrir()
             cursor=cone.cursor()
-            sql="UPDATE articulos set nombre_producto=?, cantidad=?, precio=?, precio_venta=? where codigo_barras=?"
+            sql="UPDATE articulos set nombre_producto=?, cantidad=?, fechaexp =?, precio=?, precio_venta=? where codigo_barras=?"
             
             cursor.execute(sql, datos)
             cone.commit()
