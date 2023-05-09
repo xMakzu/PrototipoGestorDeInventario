@@ -59,7 +59,7 @@ class FormularioArticulos:
         
         ttk.Button(self.labelframe1, text="Agregar Articulo", command=self.agregar).grid(column=1, row=6, padx=10, pady=20, sticky='e')
         ttk.Button(self.labelframe1, text="Modificar Articulo", command=self.modifica).grid(column=2, row=6, padx=10, pady=20, sticky='e')
-        ttk.Button(self.labelframe1, text="Ver Producto", command=self.consultar).grid(column=2, row=0, padx=10, pady=20, sticky='e')
+        ttk.Button(self.labelframe1, text="Mostrar Articulo", command=self.consultar).grid(column=2, row=0, padx=10, pady=20, sticky='e')
     
         
         # Agregar padding a las filas y columnas del frame

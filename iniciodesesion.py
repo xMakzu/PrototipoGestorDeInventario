@@ -11,7 +11,7 @@ class Login:
         self.root.resizable(False, False)
 
         # Encabezado con título y imagen
-        encabezado = Label(self.root, text="Bienvenido a MinisuperEjemplo", font=("Arial", 20))
+        encabezado = Label(self.root, text="¡Bienvenido!", font=("Arial", 20))
         encabezado.pack(pady=20)
         imagen = Image.open("imagen_inicio_sesion.png")
         imagen = imagen.resize((80,80), Image.ANTIALIAS)
