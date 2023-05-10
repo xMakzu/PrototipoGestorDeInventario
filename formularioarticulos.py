@@ -2,9 +2,15 @@ import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox as mb
 from tkinter import scrolledtext as st
-import articulos
-import sqlite3
+from datetime import datetime
 from articulos import Articulos
+import articulos
+import docx
+from docx import Document
+from docx.shared import Cm
+from docx.enum.table import WD_TABLE_ALIGNMENT
+import sqlite3
+
 
 
 class FormularioArticulos:
@@ -162,6 +168,9 @@ class FormularioArticulos:
 
         btn_buscar = ttk.Button(frame_busqueda, text="Borrar Articulo", command=self.borrar)
         btn_buscar.pack(side="left", padx=10)
+
+        btn_buscar = ttk.Button(frame_busqueda, text="Crear Informe", command=self.crear_informe)
+        btn_buscar.pack(side="left", padx=10)
         
         articulos = self.articulo1.recuperar_todos()
 
@@ -225,6 +234,44 @@ class FormularioArticulos:
             mb.showinfo("Información", "Se borró el artículo con dicho código")
         else:
             mb.showinfo("Información", "No existe un artículo con dicho código")
+
+    #Crear informe
+    def crear_informe(self):
+        # Crear el documento de Word y agregar una tabla
+        if mb.askyesno("Crear informe", "¿Está seguro que desea crear el informe?"):
+            document = Document()
+            table = document.add_table(rows=1, cols=6, style="Table Grid")
+            
+            # Agregar encabezados de columna a la tabla
+            headings = table.rows[0].cells
+            headings[0].text = "Codigo de barras"
+            headings[1].text = "Nombre del producto"
+            headings[2].text = "Cantidad"
+            headings[3].text = "Fecha de caducidad"
+            headings[4].text = "Precio de compra"
+            headings[5].text = "Precio de venta"
+            
+            # Agregar filas de datos a la tabla
+            articulos = self.articulo1.recuperar_todos()
+            for articulo in articulos:
+                row_cells = table.add_row().cells
+                row_cells[0].text = str(articulo[0])
+                row_cells[1].text = articulo[1]
+                row_cells[2].text = str(articulo[2])
+                row_cells[3].text = str(articulo[3])
+                row_cells[4].text = str(articulo[4])
+                row_cells[5].text = str(articulo[5])
+            
+            # Dar formato a la tabla
+            table.alignment = WD_TABLE_ALIGNMENT.CENTER
+            table.autofit = False
+            table.allow_autofit = False
+            for column in table.columns:
+                column.width = Cm(2.5)
+            
+            # Guardar el documento de Word
+            document.save("informe.docx")
+            mb.showinfo("Informe creado", "Se ha creado el informe con éxito.")
 
     def AnalisisdeDatos(self):
         self.pagina4 = ttk.Frame(self.cuaderno1)
