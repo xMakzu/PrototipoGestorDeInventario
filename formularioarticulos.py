@@ -18,7 +18,7 @@ class FormularioArticulos:
         self.articulo1=articulos.Articulos()
         self.ventana1=tk.Tk()
         self.ventana1.eval('tk::PlaceWindow . center')
-        self.ventana1.title("Mantenimiento de artículos")
+        self.ventana1.title("Prototipo Gestor de Inventario")
         self.cuaderno1 = ttk.Notebook(self.ventana1)        
         self.listado_completo()
         self.carga_articulos()
@@ -69,7 +69,8 @@ class FormularioArticulos:
         ttk.Button(self.labelframe1, text="Agregar Articulo", command=self.agregar).grid(column=1, row=6, padx=10, pady=20, sticky='e')
         ttk.Button(self.labelframe1, text="Modificar Articulo", command=self.modifica).grid(column=2, row=6, padx=10, pady=20, sticky='e')
         ttk.Button(self.labelframe1, text="Mostrar Articulo", command=self.consultar).grid(column=2, row=0, padx=10, pady=20, sticky='e')
-    
+        
+
         
         # Agregar padding a las filas y columnas del frame
         for i in range(5):
@@ -101,7 +102,7 @@ class FormularioArticulos:
         # Verificar que el código de barras ingresado existe en la base de datos
         datos = (codigo,)
         articulo_existente = self.articulo1.consulta(datos)
-        if not articulo_existente:
+        if not articulo_existente and cantidad is not None and cantidad != 0:
             mb.showerror("Error", "El artículo con ese código de barras no existe.")
             return
 
@@ -115,6 +116,7 @@ class FormularioArticulos:
         filas_modificadas = self.articulo1.modificacion(datos)
         if filas_modificadas == 1:
             mb.showinfo("Información", "El artículo ha sido modificado exitosamente.")
+            self.limpiar_campos()
         else:
             mb.showerror("Error", "No se pudo modificar el artículo.")
 
@@ -130,6 +132,14 @@ class FormularioArticulos:
             self.PrecioVcarga.set(respuesta[0][4])
         else:
             mb.showinfo("Información", "No existe un artículo con dicho código")
+
+    def limpiar_campos(self):
+        self.Codigocarga.set('')
+        self.Nombrecarga.set('')
+        self.Cantidadcarga.set('')
+        self.fechaexp.set('')
+        self.Preciocarga.set('')
+        self.PrecioVcarga.set('')
 
     # Codigo de tabla
     def listado_completo(self):
