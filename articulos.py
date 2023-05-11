@@ -87,10 +87,11 @@ class Articulos:
             cone = self.abrir()
             cursor = cone.cursor()
             # Consulta de los artículos próximos a caducar en los próximos 7 días
-            sql = "SELECT codigo_barras, nombre_producto, fechaexp FROM articulos WHERE fechaexp IS NOT NULL AND fechaexp <= ?"
-            cursor.execute(sql, (fecha_actual + datetime.timedelta(days=7),))
+            sql = "SELECT codigo_barras, nombre_producto, fechaexp FROM articulos WHERE fechaexp IS NOT NULL AND STRFTIME('%d/%m/%Y', fechaexp) <= ?"
+            cursor.execute(sql, ((fecha_actual + datetime.timedelta(days=7)).strftime('%d/%m/%Y'),))
             return cursor.fetchall()
         finally:
             cone.close()
+
 
 
