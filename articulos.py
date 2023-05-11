@@ -80,17 +80,31 @@ class Articulos:
         finally:
             cone.close()
         
+
     def obtener_recomendaciones_caducidad(self):
         fecha_actual = datetime.date.today()
+        fecha_limite = fecha_actual + datetime.timedelta(days=7)
         try:
             cone = self.abrir()
             cursor = cone.cursor()
             # Consulta de los artículos próximos a caducar en los próximos 7 días
-            sql = "SELECT codigo_barras, nombre_producto, fechaexp FROM articulos WHERE fechaexp IS NOT NULL AND STRFTIME('%d/%m/%Y', fechaexp) <= ?"
-            cursor.execute(sql, ((fecha_actual + datetime.timedelta(days=7)).strftime('%d/%m/%Y'),))
-            return cursor.fetchall()
+            sql = "SELECT codigo_barras, nombre_producto, fechaexp FROM articulos WHERE fechaexp IS NOT NULL"
+            cursor.execute(sql)
+            productos = []
+            for codigo_barras, nombre_producto, fechaexp in cursor.fetchall():
+                fecha_caducidad = datetime.datetime.strptime(fechaexp, '%d/%m/%Y').date()
+                dias_diferencia = (fecha_caducidad - fecha_actual).days
+                if dias_diferencia <= 7 and fecha_caducidad.year == fecha_actual.year:
+                    productos.append((codigo_barras, nombre_producto, fechaexp))
+            return productos
         finally:
             cone.close()
+
+
+
+
+
+
 
 
 

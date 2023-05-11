@@ -315,7 +315,7 @@ class FormularioArticulos:
         self.treeview_caducidad.pack(side="top", fill="both", expand=True)
 
         # Label para la tabla de recomendaciones por caducidad
-        lbl_caducidad = ttk.Label(self.pagina4, text="Estos artículos están por vencer:")
+        lbl_caducidad = ttk.Label(self.pagina4, text="Estos artículos están proximos a vencer o ya caducaron:")
         lbl_caducidad.pack(side="top", padx=10, before=self.treeview_caducidad)
 
         # Configuración de las columnas del Treeview para recomendaciones por caducidad
@@ -353,7 +353,9 @@ class FormularioArticulos:
 
         # Inserta los productos por caducidad en la tabla correspondiente
         for i, producto in enumerate(productos_caducidad):
-            self.treeview_caducidad.insert("", tk.END, text=i+1, values=(producto[0], producto[1], producto[2]))
+            fecha = datetime.datetime.strptime(producto[2], '%d/%m/%Y').strftime('%d/%m/%Y')
+            self.treeview_caducidad.insert("", tk.END, text=i+1, values=(producto[0], producto[1], fecha))
+
 
 
 
