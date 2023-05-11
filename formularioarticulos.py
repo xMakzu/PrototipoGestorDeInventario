@@ -6,6 +6,7 @@ from datetime import datetime
 from articulos import Articulos
 import articulos
 import docx
+import datetime
 from docx import Document
 from docx.shared import Cm
 from docx.enum.table import WD_TABLE_ALIGNMENT
