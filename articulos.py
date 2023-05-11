@@ -1,4 +1,6 @@
 import sqlite3
+import datetime
+
 
 class Articulos:
 
@@ -60,7 +62,7 @@ class Articulos:
         try:
             cone=self.abrir()
             cursor=cone.cursor()
-            sql="UPDATE articulos set nombre_producto=?, cantidad=?, fechaexp =?, precio=?, precio_venta=? where codigo_barras=?"
+            sql="UPDATE articulos set nombre_producto=?, cantidad=?, fechaexp=?, precio=?, precio_venta=? where codigo_barras=?"
             
             cursor.execute(sql, datos)
             cone.commit()
@@ -78,3 +80,17 @@ class Articulos:
             return cursor.fetchall()
         finally:
             cone.close()
+        
+    def obtener_recomendaciones_caducidad(self):
+        fecha_actual = datetime.date.today()
+        try:
+            cone = self.abrir()
+            cursor = cone.cursor()
+            # Consulta de los artículos próximos a caducar en los próximos 7 días
+            sql = "SELECT codigo_barras, nombre_producto, fechaexp FROM articulos WHERE fechaexp IS NOT NULL AND fechaexp <= ?"
+            cursor.execute(sql, (fecha_actual + datetime.timedelta(days=7),))
+            return cursor.fetchall()
+        finally:
+            cone.close()
+
+

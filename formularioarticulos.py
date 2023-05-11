@@ -291,41 +291,73 @@ class FormularioArticulos:
         frame_busqueda = ttk.Frame(self.pagina4)
         frame_busqueda.pack(side="top", fill="x", padx=5, pady=5)
 
-        lbl_busqueda = ttk.Label(frame_busqueda, text="Se recomienda que compres estos articulos:")
+        lbl_busqueda = ttk.Label(frame_busqueda, text="Se deben comprar estos articulos:")
         lbl_busqueda.pack(side="left", padx=5)
 
-        # Creación del Treeview
-        self.treeview = ttk.Treeview(self.pagina4, columns=("codigo_barras", "nombre_producto", "cantidad_producto", "precio"))
-        self.treeview.pack(side="top", fill="both", expand=True)
+        # Creación del Treeview para recomendaciones por cantidad
+        self.treeview_cantidad = ttk.Treeview(self.pagina4, columns=("codigo_barras", "nombre_producto", "cantidad_producto", "precio"))
+        self.treeview_cantidad.pack(side="top", fill="both", expand=True)
 
-        # Configuración de las columnas del Treeview
-        self.treeview.heading("#0", text="ID")
-        self.treeview.heading("codigo_barras", text="Código de barras")
-        self.treeview.heading("nombre_producto", text="Nombre del producto")
-        self.treeview.heading("cantidad_producto", text="Cantidad")
-        self.treeview.heading("precio", text="Precio")
-        self.treeview.column("#0", width=50)
+        # Configuración de las columnas del Treeview para recomendaciones por cantidad
+        self.treeview_cantidad.heading("#0", text="ID")
+        self.treeview_cantidad.heading("codigo_barras", text="Código de barras")
+        self.treeview_cantidad.heading("nombre_producto", text="Nombre del producto")
+        self.treeview_cantidad.heading("cantidad_producto", text="Cantidad")
+        self.treeview_cantidad.heading("precio", text="Precio")
+        self.treeview_cantidad.column("#0", width=50)
+        self.treeview_cantidad.column("codigo_barras", anchor="center")
+        self.treeview_cantidad.column("nombre_producto", anchor="center")
+        self.treeview_cantidad.column("cantidad_producto", anchor="center")
+        self.treeview_cantidad.column("precio", anchor="center")
 
-        self.treeview.column("codigo_barras", anchor="center")
-        self.treeview.column("nombre_producto", anchor="center")
-        self.treeview.column("cantidad_producto", anchor="center")
-        self.treeview.column("precio", anchor="center")
+        # Creación del Treeview para recomendaciones por caducidad
+        self.treeview_caducidad = ttk.Treeview(self.pagina4, columns=("codigo_barras", "nombre_producto", "fecha_vencimiento", "precio"))
+        self.treeview_caducidad.pack(side="top", fill="both", expand=True)
+
+        # Label para la tabla de recomendaciones por caducidad
+        lbl_caducidad = ttk.Label(self.pagina4, text="Estos artículos están por vencer:")
+        lbl_caducidad.pack(side="top", padx=10, before=self.treeview_caducidad)
+
+        # Configuración de las columnas del Treeview para recomendaciones por caducidad
+        self.treeview_caducidad.heading("#0", text="ID")
+        self.treeview_caducidad.heading("codigo_barras", text="Código de barras")
+        self.treeview_caducidad.heading("nombre_producto", text="Nombre del producto")
+        self.treeview_caducidad.heading("fecha_vencimiento", text="Fecha de vencimiento")
+        self.treeview_caducidad.column("#0", width=50)
+        self.treeview_caducidad.column("codigo_barras", anchor="center")
+        self.treeview_caducidad.column("nombre_producto", anchor="center")
+        self.treeview_caducidad.column("fecha_vencimiento", anchor="center")
+
 
 
         # Botón para obtener la lista de artículos recomendados
-        btn_obtener = ttk.Button(frame_busqueda, text="Obtener artículos", command=self.obtener_articulos)
+        btn_obtener = ttk.Button(frame_busqueda, text="Obtener Análisis", command=self.obtener_articulos)
         btn_obtener.pack(side="right", padx=5, pady=5)
 
     def obtener_articulos(self):
         # Llamada al método para obtener las recomendaciones de productos
         recomendaciones = self.articulo1.obtener_recomendaciones()
 
-        # Borra todos los elementos de la tabla
-        self.treeview.delete(*self.treeview.get_children())
+        # Borra todos los elementos de la tabla de recomendaciones
+        self.treeview_cantidad.delete(*self.treeview_cantidad.get_children())
 
-        # Inserta las recomendaciones en la tabla
+        # Inserta las recomendaciones en la tabla de recomendaciones
         for i, recomendacion in enumerate(recomendaciones):
-            self.treeview.insert("", tk.END, text=i+1, values=recomendacion)
+            self.treeview_cantidad.insert("", tk.END, text=i+1, values=recomendacion)
+
+        # Llamada al método para obtener los productos próximos a caducar
+        productos_caducidad = self.articulo1.obtener_recomendaciones_caducidad()
+
+        # Borra todos los elementos de la tabla de productos por caducidad
+        self.treeview_caducidad.delete(*self.treeview_caducidad.get_children())
+
+        # Inserta los productos por caducidad en la tabla correspondiente
+        for i, producto in enumerate(productos_caducidad):
+            self.treeview_caducidad.insert("", tk.END, text=i+1, values=(producto[0], producto[1], producto[2]))
+
+
+
+
 
 
 
