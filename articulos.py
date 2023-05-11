@@ -1,7 +1,6 @@
 import sqlite3
 import datetime
 
-
 class Articulos:
 
     def abrir(self):
@@ -92,6 +91,8 @@ class Articulos:
             return cursor.fetchall()
         finally:
             cone.close()
+
+
 
 
 

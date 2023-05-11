@@ -7,6 +7,7 @@ try:
                               codigo_barras INTEGER PRIMARY KEY,
                               nombre_producto TEXT,
                               cantidad INTEGER,
+                              fechaexp TEXT,
                               precio REAL,
                               precio_venta REAL
                         )""")
