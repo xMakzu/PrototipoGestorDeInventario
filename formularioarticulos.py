@@ -219,6 +219,7 @@ class FormularioArticulos:
             
         else:
             mb.showerror("Error", f"No se encontró el artículo con el código {codigo}")
+            
 
     def actualizar_tabla(self):
         # Borra todos los elementos de la tabla
@@ -372,14 +373,3 @@ class FormularioArticulos:
         for i, producto in enumerate(productos_caducidad):
             fecha = datetime.datetime.strptime(producto[2], '%d/%m/%Y').strftime('%d/%m/%Y')
             self.treeview_caducidad.insert("", tk.END, text=i+1, values=(producto[0], producto[1], fecha))
-
-
-
-
-
-
-
-
-
-
-       
