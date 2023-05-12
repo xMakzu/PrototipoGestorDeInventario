@@ -100,7 +100,7 @@ class Articulos:
         finally:
             cone.close()
 
-
+    
 
 
 
