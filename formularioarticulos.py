@@ -81,15 +81,30 @@ class FormularioArticulos:
 
     # Crear función agregar
     def agregar(self):
-        datos=(self.Codigocarga.get(), self.Nombrecarga.get(), self.Cantidadcarga.get(), self.fechaexp.get(), self.Preciocarga.get(), self.PrecioVcarga.get())
-        self.articulo1.alta(datos)
-        mb.showinfo("Información", "Los datos fueron cargados")
-        self.Codigocarga.set("")
-        self.Nombrecarga.set("")
-        self.Cantidadcarga.set("")
-        self.fechaexp.set("")
-        self.Preciocarga.set("")
-        self.PrecioVcarga.set("")
+        codigo = self.Codigocarga.get()
+        nombre = self.Nombrecarga.get()
+        cantidad = self.Cantidadcarga.get()
+        fecha = self.fechaexp.get()
+        precio = self.Preciocarga.get()
+        precio_venta = self.PrecioVcarga.get()
+
+        if not codigo or not nombre or not cantidad or not fecha or not precio or not precio_venta:
+            mb.showwarning("Campos vacíos", "Por favor, complete todos los campos.")
+            return
+
+        datos = (codigo, nombre, cantidad, fecha, precio, precio_venta)
+        try:
+            self.articulo1.alta(datos)
+            mb.showinfo("Información", "Los datos fueron cargados")
+            self.Codigocarga.set("")
+            self.Nombrecarga.set("")
+            self.Cantidadcarga.set("")
+            self.fechaexp.set("")
+            self.Preciocarga.set("")
+            self.PrecioVcarga.set("")
+        except sqlite3.IntegrityError:
+            mb.showerror("Error", "El código ya existe. No se pueden agregar productos duplicados.")
+            
 
      # Función de modificar articulo
     def modifica(self):
