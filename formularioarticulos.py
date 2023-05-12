@@ -105,6 +105,7 @@ class FormularioArticulos:
         except sqlite3.IntegrityError:
             mb.showerror("Error", "El código ya existe. No se pueden agregar productos duplicados.")
             #cambio1
+            #cambio2
             
 
      # Función de modificar articulo
