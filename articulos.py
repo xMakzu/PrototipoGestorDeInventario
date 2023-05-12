@@ -94,11 +94,12 @@ class Articulos:
             for codigo_barras, nombre_producto, fechaexp in cursor.fetchall():
                 fecha_caducidad = datetime.datetime.strptime(fechaexp, '%d/%m/%Y').date()
                 dias_diferencia = (fecha_caducidad - fecha_actual).days
-                if dias_diferencia <= 7 and fecha_caducidad.year == fecha_actual.year:
+                if (dias_diferencia <= 7 and fecha_caducidad.year == fecha_actual.year) or (fecha_caducidad <= fecha_actual):
                     productos.append((codigo_barras, nombre_producto, fechaexp))
             return productos
         finally:
             cone.close()
+
 
 
 

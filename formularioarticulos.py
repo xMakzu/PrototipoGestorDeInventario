@@ -36,7 +36,7 @@ class FormularioArticulos:
         style = ttk.Style()
         style.configure('TLabel', font=('Arial', 12))
         style.configure('TEntry', font=('Arial', 12))
-        style.configure('TButton', font=('Arial', 12))
+        style.configure('TButton', font=('Arial', 10))
         
         # Crear el frame principal
         self.labelframe1 = ttk.LabelFrame(self.pagina1, text="Crear/Editar", padding=20)
@@ -56,6 +56,7 @@ class FormularioArticulos:
         ttk.Entry(self.labelframe1, textvariable=self.Cantidadcarga, width=30).grid(column=1, row=2, padx=10, pady=10)
 
         ttk.Label(self.labelframe1, text="Fecha de Caducidad:").grid(column=0, row=3, padx=10, pady=10)
+        ttk.Label(self.labelframe1, text="dd/mm/aaaa").grid(column=2, row=3, padx=10, pady=10)
         self.fechaexp = tk.StringVar()
         ttk.Entry(self.labelframe1, textvariable=self.fechaexp, width=30).grid(column=1, row=3, padx=10, pady=10)
         
