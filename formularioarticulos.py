@@ -104,6 +104,7 @@ class FormularioArticulos:
             self.PrecioVcarga.set("")
         except sqlite3.IntegrityError:
             mb.showerror("Error", "El código ya existe. No se pueden agregar productos duplicados.")
+            
 
      # Función de modificar articulo
     def modifica(self):
